@@ -32,23 +32,50 @@ async function getInfor() {
       const uls = element.querySelectorAll(
         "ul[class*='list-unstyled text-body-smaller']"
       );
-      const container = uls[i].querySelectorAll(
+      const containerRight = uls[i].querySelectorAll(
         "li div.float-left span:nth-of-type(2)"
+      );
+      const containerLeft = uls[i].querySelectorAll(
+        "li div.float-left span:nth-of-type(1)"
       );
       const personalizable = element.querySelector(
         ".badge.bg-gray-darker.mr-xs-1.display-inline"
       );
       if (personalizable) {
-        quantity = container[0].innerText;
-        sku = container[1].innerText;
-        shape_color = container[2].innerText;
-        size = container[3].innerText;
-        personalization = container[4].innerText;
+        for (let i = 0; i < containerLeft.length; i++) {
+          if (containerLeft[i].innerText.toLowerCase().includes("size")) {
+            size = containerRight[i].innerText;
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("quantity")) {
+            quantity = containerRight[i].innerText;
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("sku")) {
+            sku = containerRight[i].innerText;
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("color")) {
+            shape_color = containerRight[i].innerText;
+          }
+          if (
+            containerLeft[i].innerText.toLowerCase().includes("personalization")
+          ) {
+            personalization = containerRight[i].innerText;
+          }
+        }
       } else {
-        quantity = container[0].innerText;
-        sku = container[1].innerText;
-        size = container[2].innerText.match(/[A-Z]+$/)[0];
-        shape_color = container[3].innerText;
+        for (let i = 0; i < containerLeft.length; i++) {
+          if (containerLeft[i].innerText.toLowerCase().includes("size")) {
+            size = containerRight[i].innerText.match(/[A-Z]+$/)[0];
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("quantity")) {
+            quantity = containerRight[i].innerText;
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("sku")) {
+            sku = containerRight[i].innerText;
+          }
+          if (containerLeft[i].innerText.toLowerCase().includes("color")) {
+            shape_color = containerRight[i].innerText;
+          }
+        }
       }
       const name = element.querySelector(
         "div.address.break-word.fs-mask p span.name"
