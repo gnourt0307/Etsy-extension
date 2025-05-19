@@ -1,3 +1,4 @@
+//comment out the below line to test the code
 async function getInfor() {
   let data = [];
   let elements = document.querySelectorAll(
