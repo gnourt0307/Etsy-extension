@@ -32,6 +32,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const data = request.data;
     const sheetId = request.sheetId;
     const values = data.map((infor) => [
+      infor.storeName,
       infor.orderTime,
       infor.orderId,
       infor.trackingNumber,

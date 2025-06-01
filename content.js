@@ -1,6 +1,9 @@
 //comment out the below line to test the code
 async function getInfor() {
   let data = [];
+  const storeName = document.querySelector(
+    ".wt-panel__trigger-container.wt-width-full button div p"
+  ).innerText;
   let elements = document.querySelectorAll(
     ".order-group-list .panel-body-row.has-hover-state"
   );
@@ -120,6 +123,7 @@ async function getInfor() {
         "div.address.break-word.fs-mask p span.country-name"
       ).innerText;
       const values = {
+        storeName: storeName,
         orderTime: orderTimeFormatted,
         orderId: orderId,
         trackingNumber: "",
