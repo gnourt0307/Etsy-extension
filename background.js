@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       infor.productName,
       infor.productSKU,
       infor.shape_color,
-      infor.size,
+      infor.size_style,
       infor.quantity,
       infor.name,
       infor.telephone,
@@ -56,6 +56,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       infor.street,
       infor.zip,
       infor.sku,
+      infor.personalization,
     ]);
     console.log("Data received in background:", values);
     sendResponse({ message: "Writing to Google Sheets..." });
@@ -82,7 +83,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           }
         });
       const nextRow = lastRowIndex + 1;
-      console.log("Next row to write:", nextRow);
       const writeRange = `Sheet1!A${nextRow}`;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${writeRange}:append?valueInputOption=USER_ENTERED`;
 

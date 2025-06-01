@@ -18,7 +18,6 @@ document.getElementById("write").addEventListener("click", () => {
   const sheetId = document.getElementById("sheetIdInput").value.trim();
   const orderDate = document.getElementById("dateOrder").value.trim();
   const orderDateFormatted = changeDateFormat(orderDate);
-  console.log("orderDate", orderDate);
   if (!sheetId || orderDate == "") {
     alert("Vui lòng nhập đầy đủ Sheet ID và ngày của order.");
     return;
