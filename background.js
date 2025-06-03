@@ -63,7 +63,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ message: "Writing to Google Sheets..." });
 
     getAccessToken(async (token) => {
-      const readUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?majorDimension=ROWS`;
+      const sheetName = request.sheetName || "Sheet1" || "Trang tính 1";
+      console.log("Sheet Name:", sheetName);
+      const readUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?majorDimension=ROWS`;
 
       let lastRowIndex = 0;
       await fetch(readUrl, {
@@ -84,7 +86,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           }
         });
       const nextRow = lastRowIndex + 1;
-      const writeRange = `Sheet1!A${nextRow}`;
+      const writeRange = `${sheetName}!A${nextRow}`;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${writeRange}:append?valueInputOption=USER_ENTERED`;
 
       fetch(url, {

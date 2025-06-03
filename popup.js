@@ -9,32 +9,35 @@ showAddressBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  chrome.storage.local.get(["sheetId"], (result) => {
+  chrome.storage.local.get(["sheetId", "sheetName"], (result) => {
     document.getElementById("sheetIdInput").value = result.sheetId || "";
+    document.getElementById("sheetName").value = result.sheetName || "";
   });
 });
 
 document.getElementById("write").addEventListener("click", () => {
   const sheetId = document.getElementById("sheetIdInput").value.trim();
   const orderDate = document.getElementById("dateOrder").value.trim();
+  const sheetName = document.getElementById("sheetName").value.trim();
   const orderDateFormatted = changeDateFormat(orderDate);
-  if (!sheetId || orderDate == "") {
-    alert("Vui lòng nhập đầy đủ Sheet ID và ngày của order.");
+  if (!sheetId || orderDate == "" || !sheetName) {
+    alert("Vui lòng nhập đầy đủ thông tin.");
     return;
   }
 
-  chrome.storage.local.set({ sheetId });
+  chrome.storage.local.set({ sheetId, sheetName });
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript(
       {
         target: { tabId: tabs[0].id },
-        func: (sheetId, orderDateFormatted) => {
+        func: (sheetId, orderDateFormatted, sheetName) => {
           // Store Sheet ID globally in content script
           window.__SHEET_ID__ = sheetId;
           window.__ORDER_DATE__ = orderDateFormatted;
+          window.__SHEET_NAME__ = sheetName;
         },
-        args: [sheetId, orderDateFormatted],
+        args: [sheetId, orderDateFormatted, sheetName],
       },
       () => {
         chrome.scripting.executeScript({

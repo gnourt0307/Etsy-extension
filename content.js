@@ -188,13 +188,20 @@ function compareDates(dateStr1, dateStr2) {
 
 (function () {
   const sheetId = window.__SHEET_ID__;
+  const sheetName = window.__SHEET_NAME__;
+
   if (!sheetId) {
     console.error("Sheet ID is not defined.");
   } else {
     (async () => {
       const data = await getInfor();
       chrome.runtime.sendMessage(
-        { action: "writeToSheet", data: data, sheetId: sheetId },
+        {
+          action: "writeToSheet",
+          data: data,
+          sheetId: sheetId,
+          sheetName: sheetName,
+        },
         (response) => {
           console.log("Response from background:", response.message);
         }
