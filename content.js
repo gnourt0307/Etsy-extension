@@ -2,7 +2,7 @@
 async function getInfor() {
   let data = [];
   const storeName = document.querySelector(
-    ".wt-panel__trigger-container.wt-width-full button div p"
+    ".wt-display-inline-flex-xs.wt-align-items-center p[class='wt-text-body-small wt-text-gray break-all'] span"
   ).innerText;
   let elements = document.querySelectorAll(
     ".order-group-list .panel-body-row.has-hover-state"
